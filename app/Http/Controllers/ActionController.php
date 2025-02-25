@@ -12,7 +12,8 @@ class ActionController extends Controller
      */
     public function index()
     {
-        return Action::all();
+        $actions = Action::all();
+        return view('index', ['header' => "Acciones"], compact('actions'));
     }
 
     /**
@@ -41,7 +42,8 @@ class ActionController extends Controller
      */
     public function show(string $id)
     {
-        return Action::find($id);
+        $accion = Action::find($id);
+        return view('show', ['header' => "Acción $accion->id", 'action' => $accion]);
     }
 
     /**

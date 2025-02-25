@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->date('date');
             $table->string('interval');
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

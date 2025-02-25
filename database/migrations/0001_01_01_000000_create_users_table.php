@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('phone');
             $table->string('surname1');
             $table->string('surname2')->nullable();
-            $table->string('tutor_id')->nullable();
-            $table->string('teacher_id')->nullable();
+            $table->bigInteger('tutor_id')->nullable()->onDelete('set null');
+            $table->bigInteger('teacher_id')->nullable()->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });

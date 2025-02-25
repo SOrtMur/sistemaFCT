@@ -6,7 +6,7 @@
 
 @section('content')
     @isset($company)
-        <table class="table text-center">
+        <table class="table text-center table-striped">
             <tbody class="row">
                 <tr>
                     <th>Nombre</th>
@@ -44,7 +44,34 @@
         </table>
     @endisset
     @isset($action)
-
+        <table class="table text-center table-striped">
+            <tbody class="row">
+                <tr>
+                    <th>Descripcion</th>
+                    <td>{{$action->description}}</td>
+                </tr>
+                <tr>
+                    <th>Fecha</th>
+                    <td>{{$action->date}}</td>
+                </tr>
+                <tr>
+                    <th>Intervalo</th>
+                    <td>{{$action->interval}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{route('action.edit', $action->id)}}" class="link-info">Editar</a>
+                    </td>
+                    <td>
+                        <form action="{{route('action.destroy', $action->id)}}" method="POST">
+                            @csrf
+                            @method("DELETE")
+                            <input type="submit" value="Borrar" class="btn btn-info"/>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     @endisset
     @isset($user)
         <table class="table text-center">
@@ -72,13 +99,21 @@
             <tr>
                 <th>Tutor</th>
                 <td>
-                    <a href="{{route('user.show', $user->tutor_id ?? '')}}" class="link-info">{{$user->tutor()->where("id",$user->tutor_id)->first()->name ?? '-'}}</a>
+                    @isset($user->tutor_id)
+                        <a href="{{route('user.show', $user->tutor_id ?? '')}}" class="link-info">{{$user->tutor()->where("id",$user->tutor_id)->first()->name ?? '-'}}</a>
+                    @else
+                        -
+                    @endisset
                 </td>
             </tr>
             <tr>
                 <th>Profesor</th>
                 <td>
-                    <a href="{{route('user.show', $user->teacher_id ?? '')}}" class="link-info">{{$user->teacher()->where("id",$user->teacher_id)->first()->name ?? '-'}}</a>
+                    @isset ($user->teacher_id)
+                        <a href="{{route('user.show', $user->teacher_id ?? '')}}" class="link-info">{{$user->teacher()->where("id",$user->teacher_id)->first()->name ?? '-'}}</a>
+                    @else
+                        -
+                    @endisset
                 </td>           
              </tr>
             <tr>
@@ -95,5 +130,7 @@
             </tr>
             </tbody>
         </table>
+    @else
+        <h1 class="text-center">Usuario no encontrado</h1>
     @endisset
 @endsection
