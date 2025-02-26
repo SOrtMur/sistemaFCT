@@ -33,7 +33,7 @@ class ActionController extends Controller
             'description' => 'required',
             'date' => 'required',
             'interval' => 'required',
-            'user_id' => 'required'
+            //'user_id' => 'required'
         ]);
     }
 
