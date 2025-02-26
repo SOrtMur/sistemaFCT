@@ -21,7 +21,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('create_company');
+        return view('create', ['header' => "Nueva Empresa"]);
     }
 
     /**

@@ -17,11 +17,28 @@
             table, table *{
                 padding: 3px;
             }
-            table{
+            header{
+                text-align: center;
+            }
+            h2{
+                text-align: center;
+                padding: 5px
+            }
+            table, form{
                 justify-self: center;
             }
+            form div{
+                padding: 2px; 
+            }
             a, input[type="submit"]{
-                color: blueviolet;
+                color: blue;
+            }
+            .form-group{
+                display: flex;
+                justify-content: space-between;
+            }
+            .form-group > *{
+                margin-left: 4px;
             }
         </style>
     </head>
@@ -33,7 +50,7 @@
             @isset($header)
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                        @yield('header')
                     </div>
                 </header>
             @endisset

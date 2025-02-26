@@ -2,6 +2,19 @@
 
 @section('header')
     <h1>{{$header}}</h1>
+    @switch($header)
+        @case(str_contains($header, "Empresas"))
+            <a href="{{route('company.create')}}">Nueva Empresa</a>
+            @break
+        @case(str_contains($header, "Acciones"))
+            <a href="{{route('action.create')}}">Nueva Accion</a>
+            @break
+        @case(str_contains($header, "Usuarios"))
+            <a href="{{route('user.create')}}">Nuevo Usuario</a>
+            @break
+        @default
+            {{"uwu"}}
+    @endswitch
 @endsection
 
 @section('content')
@@ -93,21 +106,13 @@
                                 <td>{{$user->surname1}}</td>
                                 <td>{{$user->surname2}}</td>
                                 <td>
-                                    @if($user->tutor_id != null && array_key_exists($user->tutor_id , $users->toArray()))
-                                        @isset($user->tutor()->where('id',$user->tutor_id)->first()->name)
+                                    @if($user->tutor_id && $user->tutor()->where("id",$user->tutor_id)->first() !== null)
                                             {{$user->tutor()->where('id',$user->tutor_id)->first()->name}}
-                                    @else 
-                                        -
-                                    @endisset
                                     @endif
                                 </td>
                                 <td>
-                                    @if($user->teacher_id != null && array_key_exists($user->teacher_id , $users->toArray()))
-                                        @isset($user->teacher()->where('id',$user->teacher_id)->first()->name)
+                                    @if($user->teacher_id && $user->teacher()->where("id",$user->teacher_id)->first() !== null)
                                             {{$user->teacher()->where('id',$user->teacher_id)->first()->name}}
-                                            @else 
-                                            -
-                                        @endisset
                                     @endif
                                 </td>
                                 <td>

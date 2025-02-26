@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('create', ['header' => "Nuevo Usuario"]);
     }
 
     /**
@@ -62,7 +62,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
-        return view('show', ['header' => "Usuario $id", 'user' => $user]);
+        return view('show', ['header' => "$user->name $user->surname1", 'user' => $user]);
     }
 
     /**
@@ -70,7 +70,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        return view('user.edit', ['user' => User::find($id)]);
+        $user = User::find($id);
+        return view('user.edit', ['header' => "$user->name $user->surname1", 'user' => $user]);
     }
 
     /**

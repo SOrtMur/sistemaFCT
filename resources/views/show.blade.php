@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    <h1>{{$header}}</h1>
+    <h1>{{"<h1>$header</h1>"}}</h1>
 @endsection
 
 @section('content')
@@ -40,6 +40,11 @@
                         </form>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <a href="{{route('company.index')}}"><h2 style="font-size: 20px;">Volver al indice</h2></a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     @endisset
@@ -68,6 +73,11 @@
                             @method("DELETE")
                             <input type="submit" value="Borrar" class="btn btn-info"/>
                         </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <a href="{{route('action.index')}}"><h2 style="font-size: 20px;">Volver al indice</h2></a>
                     </td>
                 </tr>
             </tbody>
@@ -99,21 +109,17 @@
             <tr>
                 <th>Tutor</th>
                 <td>
-                    @isset($user->tutor_id)
-                        <a href="{{route('user.show', $user->tutor_id ?? '')}}" class="link-info">{{$user->tutor()->where("id",$user->tutor_id)->first()->name ?? '-'}}</a>
-                    @else
-                        -
-                    @endisset
+                    @if($user->tutor_id && $user->tutor()->where("id",$user->tutor_id)->first() !== null)
+                        <a href="{{route('user.show', $user->tutor_id ?? '-')}}" class="link-info">{{$user->tutor()->where("id",$user->tutor_id)->first()->name}}</a>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <th>Profesor</th>
                 <td>
-                    @isset ($user->teacher_id)
-                        <a href="{{route('user.show', $user->teacher_id ?? '')}}" class="link-info">{{$user->teacher()->where("id",$user->teacher_id)->first()->name ?? '-'}}</a>
-                    @else
-                        -
-                    @endisset
+                    @if($user->teacher_id && $user->teacher()->where("id",$user->teacher_id)->first() !== null)
+                        <a href="{{route('user.show', $user->teacher_id ?? '-')}}" class="link-info">{{$user->teacher()->where("id",$user->teacher_id)->first()->name}}</a>
+                    @endif
                 </td>           
              </tr>
             <tr>
@@ -121,16 +127,19 @@
                 <a href="{{route('user.edit', $user->id)}}" class="link-info">Editar</a>
                 </td>
                 <td>
-                <form action="{{route('user.destroy', $user->id)}}" method="POST">
-                    @csrf
-                    @method("DELETE")
-                    <input type="submit" value="Borrar" class="btn btn-info"/>
-                </form>
+                    <form action="{{route('user.destroy', $user->id)}}" method="POST">
+                        @csrf
+                        @method("DELETE")
+                        <input type="submit" value="Borrar" class="btn btn-info"/>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="2">
+                    <a href="{{route('user.index')}}"><h2 style="font-size: 20px;">Volver al indice</h2></a>
                 </td>
             </tr>
             </tbody>
         </table>
-    @else
-        <h1 class="text-center">Usuario no encontrado</h1>
     @endisset
 @endsection

@@ -21,7 +21,7 @@ class ActionController extends Controller
      */
     public function create()
     {
-        return view('action.create');
+        return view('create', ['header' => "Nueva Acción"]);
     }
 
     /**
@@ -82,6 +82,6 @@ class ActionController extends Controller
     public function destroy(string $id)
     {
         Action::destroy($id);
-        route('action.index');
+        return redirect(route('action.index'));
     }
 }
