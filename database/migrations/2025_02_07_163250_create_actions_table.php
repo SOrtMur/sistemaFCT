@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('description');
             $table->date('date');
-            $table->string('interval');
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->double('interval');
+            $table->bigInteger('user_id')->nullable()->references('id')->on('users')->onDelete('cascade')->onUpdate('set null');
             $table->timestamps();
         });
     }

@@ -33,8 +33,17 @@ class ActionController extends Controller
             'description' => 'required',
             'date' => 'required',
             'interval' => 'required',
-            //'user_id' => 'required'
+            //'user_id' => 'required' Recoger el id del usuario logueado
         ]);
+
+        Action::create([
+            'description' => $request->description,
+            'date' => $request->date,
+            'interval' => $request->interval,
+            'user_id' => $request->user_id ?? 1
+        ]);
+
+        return redirect()->route('action.index');
     }
 
     /**
@@ -51,7 +60,8 @@ class ActionController extends Controller
      */
     public function edit(string $id)
     {
-        return view('action.edit', ['action' => Action::find($id)]);
+        $accion = Action::find($id);
+        return view('edit', ['header' => "Editar accion",'action' => $accion]);
     }
 
     /**
@@ -63,17 +73,15 @@ class ActionController extends Controller
             'description' => 'required',
             'date' => 'required',
             'interval' => 'required',
-            'user_id' => 'required'
         ]);
 
         Action::find($id)->update([
             'description' => $request->description,
             'date' => $request->date,
             'interval' => $request->interval,
-            'user_id' => $request->user_id
         ]);
 
-        return redirect(route('action.show', ['id' => $id]));
+        return redirect(route('action.show', $id));
     }
 
     /**

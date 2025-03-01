@@ -21,7 +21,7 @@ class ActionFactory extends Factory
         return [
             'description' => fake()->name(),
             'date' => fake()->date(),
-            'interval' => fake()->name(),
+            'interval' => fake()->numberBetween(0.0,10.0),
             'user_id' => fake()->numberBetween(1, User::count())
         ];
     }

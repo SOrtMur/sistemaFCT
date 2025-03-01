@@ -11,7 +11,7 @@ class Action extends Model
     use HasFactory;
 
     protected $fillable = [
-        'address',
+        'description',
         'date',
         'interval',
         'user_id'

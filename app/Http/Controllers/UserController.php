@@ -23,8 +23,20 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return view('create', ['header' => "Nuevo Usuario"]);
+    {   
+        $users = User::all();
+        $tutores = [];
+        $profesores = [];
+        foreach ($users as $user) {
+            if ($user->role()->where('name','tutor')->first()) {
+                array_push($tutores, $user);
+            }
+            if ($user->role()->where('name','teacher')->first()) {
+                array_push($profesores,$user);
+            }
+        }
+
+        return view('create', ['header' => "Nuevo Usuario", 'tutores' => $tutores, 'profesores' => $profesores]);
     }
 
     /**
@@ -50,7 +62,8 @@ class UserController extends Controller
             'surname1' => $request->surname1,
             'surname2' => $request->surname2,
             'remember_token' => Str::random(10),
-            
+            'tutor_id' => $request->tutor_id,
+            'teacher_id' => $request->teacher_id
         ]);
 
         return redirect()->route('user.index');
@@ -71,7 +84,19 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        return view('user.edit', ['header' => "$user->name $user->surname1", 'user' => $user]);
+        $users = User::all();
+        $tutores = [];
+        $profesores = [];
+        foreach ($users as $user) {
+            if ($user->role()->where('name','tutor')->first()) {
+                array_push($tutores, $user);
+            }
+            if ($user->role()->where('name','teacher')->first()) {
+                array_push($profesores,$user);
+            }
+        }
+
+        return view('edit', ['header' => "Editar datos de $user->name $user->surname1", 'user' => $user, 'tutores' => $tutores, 'profesores' => $profesores]);
     }
 
     /**
@@ -81,7 +106,6 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'password' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'surname1' => 'required'
@@ -95,6 +119,8 @@ class UserController extends Controller
             'phone' => $request->phone,
             'surname1' => $request->surname1,
             'remember_token' => Str::random(10),
+            'tutor_id' => $request->tutor_id,
+            'teacher_id' => $request->teacher_id
         ]);
 
         return redirect(route('user.index'));

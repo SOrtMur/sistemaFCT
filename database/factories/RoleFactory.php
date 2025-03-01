@@ -16,10 +16,18 @@ class RoleFactory extends Factory
      */
     public function definition(): array
     {
-        $userType = ['admin', 'teacher', 'tutor', 'pupil'];
-        return [
-            'name' => fake()->randomElement($userType),
-            'description' => fake()->name()
-        ];
+        $roles = [
+            'admin'=>"Administrador del sistema",
+            'teacher'=>"Profesor",
+            'pupil'=>"Alumno",
+            'tutor'=>"Tutor del alumno en la empresa",
+         ];
+
+        foreach ($roles as $role=>$description) {
+            \App\Models\Rol::create([
+                'name' => $role,
+                'description' => $description,
+            ]);
+        }
     }
 }

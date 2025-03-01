@@ -36,6 +36,7 @@
                                 <th>Descripcion</th>
                                 <th>Fecha</th>
                                 <th>Intervalo</th>
+                                <th>Usuario</th>
                                 <th colspan="2">Operaciones de tabla</th>
                             @endisset
                             @isset($users)
@@ -81,6 +82,7 @@
                                 <td>{{$action->description}}</td>
                                 <td>{{$action->date}}</td>
                                 <td>{{$action->interval}}</td>
+                                <td>{{$action->user->name}}</td>
                                 <td>
                                     <a href="{{route('action.show', $action->id)}}" class="link-info">Ver</a>
                                 </td>

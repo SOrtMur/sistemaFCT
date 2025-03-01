@@ -29,6 +29,14 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'mail' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'cif' => 'required'
+        ]);
+
         Company::create([
             'name' => $request->name,
             'contact_email' => $request->mail,
@@ -54,7 +62,8 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        return view('edit_company', ['company' => Company::find($id)]);
+        $company = Company::find($id);
+        return view('edit', ['header' => "Editar datos de $company->name",'company' => $company]);
     }
 
     /**
@@ -62,9 +71,17 @@ class CompanyController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'contact_email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'cif' => 'required'
+        ]);
+
         Company::find($id)->update([
             'name' => $request->name,
-            'email_contact' => $request->contact_email,
+            'contact_email' => $request->contact_email,
             'address' => $request->address,
             'phone' => $request->phone,
             'cif' => $request->cif

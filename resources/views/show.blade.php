@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    <h1>{{"<h1>$header</h1>"}}</h1>
+    <h1>{{$header}}</h1>
 @endsection
 
 @section('content')
