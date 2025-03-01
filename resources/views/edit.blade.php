@@ -115,7 +115,24 @@
                     </div>
                 </form>
             @endisset
-
+            @isset($rol)
+                <form action="{{route('role.update',$rol->id)}}" method="POST">
+                    @csrf
+                    @method("PUT")
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" name="name" placeholder="Nombre" id="name" value="{{$rol->name}}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Descripcion</label>
+                        <input type="text" class="form-control" name="description" placeholder="Descripcion" id="description" value="{{$rol->description}}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Guardar"/>
+                        <a href="{{route('role.index')}}">Volver al Indice</a>
+                    </div>
+                </form>
+            @endisset
         </div>
     </div>
 </div>

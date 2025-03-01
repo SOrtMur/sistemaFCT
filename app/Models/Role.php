@@ -22,4 +22,8 @@ class Role extends Model
     public function company(): BelongsToMany{
         return $this->belongsToMany(Company::class, 'companies_roles_users');
     }
+
+    public static function validateRole(string $role, array $roles): bool{
+        return in_array($role, $roles);;
+    }
 }

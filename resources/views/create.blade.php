@@ -111,8 +111,26 @@
                                 <input type="submit" class="btn btn-primary" value="Guardar"/>
                                 <a href="{{route('user.index')}}">Volver al Indice</a>
                             </div>
-                    @default
-                        
+                        </form>
+                        @break
+                    @case(str_contains($header, "Rol"))
+                        <h2>Nuevo rol</h2>
+                        <form action="{{route('role.store')}}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Nombre</label>
+                                <input type="text" class="form-control" name="name" placeholder="Nombre" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Descripcion</label>
+                                <input type="text" class="form-control" name="description" placeholder="Descripcion" id="description" required>
+                            </div>
+                            <div class="form-group">    
+                                <input type="submit" class="btn btn-primary" value="Guardar"/>
+                                <a href="{{route('role.index')}}">Volver al Indice</a>
+                            </div>
+                        </form>
+                        @break
                 @endswitch
             </div>
         </div>

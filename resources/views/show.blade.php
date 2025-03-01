@@ -142,4 +142,35 @@
             </tbody>
         </table>
     @endisset
+    @isset($rol)
+        <table class="table text-center">
+            <tbody class="row">
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{$rol->name}}</td>
+                </tr>
+                <tr>
+                    <th>Descripcion</th>
+                    <td>{{$rol->description}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{route('role.edit', $rol->id)}}" class="link-info">Editar</a>
+                    </td>
+                    <td>
+                        <form action="{{route('role.destroy', $rol->id)}}" method="POST">
+                            @csrf
+                            @method("DELETE")
+                            <input type="submit" value="Borrar" class="btn btn-info"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2">
+                        <a href="{{route('role.index')}}"><h2 style="font-size: 20px;">Volver al indice</h2></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    @endisset
 @endsection

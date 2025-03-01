@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\RoleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,4 +34,5 @@ require __DIR__.'/auth.php';
 Route::resource('usuario', UserController::class)->names('user');
 Route::resource('empresa', CompanyController::class)->names('company');
 Route::resource('accion', ActionController::class)->names('action');
+Route::resource('rol', RoleController::class)->names('role');
 

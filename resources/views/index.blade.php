@@ -12,8 +12,9 @@
         @case(str_contains($header, "Usuarios"))
             <a href="{{route('user.create')}}">Nuevo Usuario</a>
             @break
-        @default
-            {{"uwu"}}
+        @case(str_contains($header, "Roles"))
+            <a href="{{route('role.create')}}">Nuevo Rol</a>  
+            @break
     @endswitch
 @endsection
 
@@ -30,14 +31,14 @@
                                 <th>Email</th>
                                 <th>Direccion</th>
                                 <th>CIF</th>
-                                <th colspan="2">Operaciones de tabla</th>
+                                <th colspan="3">Operaciones de tabla</th>
                             @endisset
                             @isset($actions)
                                 <th>Descripcion</th>
                                 <th>Fecha</th>
                                 <th>Intervalo</th>
                                 <th>Usuario</th>
-                                <th colspan="2">Operaciones de tabla</th>
+                                <th colspan="3">Operaciones de tabla</th>
                             @endisset
                             @isset($users)
                                 <th>Nombre</th>
@@ -47,7 +48,12 @@
                                 <th>Apellido2</th>
                                 <th>Tutor</th>
                                 <th>Profesor</th>
-                                <th colspan="2">Operaciones de tabla</th>
+                                <th colspan="3">Operaciones de tabla</th>
+                            @endisset
+                            @isset($roles)
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th colspan="3">Operaciones de tabla</th>
                             @endisset
                         </tr>
                     </thead>
@@ -132,6 +138,28 @@
                                 </td>
                             </tr>
                             @endforeach
+                        @endisset
+                        @isset($roles)
+                            @foreach ($roles as $role)
+                            <tr>
+                                <td>{{$role->name}}</td>
+                                <td>{{$role->description}}</td>
+                                <td>
+                                    <a href="{{route('role.show', $role->id)}}" class="link-info">Ver</a>
+                                </td>
+                                <td>
+                                    <a href="{{route('role.edit', $role->id)}}" class="link-info">Editar</a>
+                                </td>
+                                <td>
+                                    <form action="{{route('role.destroy', $role->id)}}" method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <input type="submit" value="Borrar" class="btn btn-info"/>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                            
                         @endisset
                     </tbody>
                 </table>
