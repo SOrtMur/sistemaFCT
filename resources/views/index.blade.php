@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    <h1>{{$header}}</h1>
+    <h1>{{$header ?? $header="Bienvenido a la aplicación."}}</h1>
     @switch($header)
         @case(str_contains($header, "Empresas"))
             <a href="{{route('company.create')}}">Nueva Empresa</a>
@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container mx-auto">
         <div class="row">
             <div class="col-md-12">
                 <table class="table">
@@ -159,10 +159,19 @@
                                 </td>
                             </tr>
                             @endforeach
-                            
                         @endisset
                     </tbody>
                 </table>
+                @if (str_contains($header, "Bienvenido"))
+                    <div class="jumbotron text-center pt-6">
+                        <div>
+                            <p>Esta es la página principal de la aplicación.</p>
+                            <p>Utilice el menú de navegación para acceder a las diferentes secciones.</p>
+                            <p>Puede gestionar empresas, acciones, usuarios y roles desde aquí.</p>
+                            <p>Para cualquier consulta, no dude en ponerse en contacto con el soporte técnico.</p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

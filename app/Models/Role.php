@@ -24,6 +24,7 @@ class Role extends Model
     }
 
     public static function validateRole(string $role, array $roles): bool{
-        return in_array($role, $roles);;
+        //$rolesid = Role::whereIn('name', $roles)->get()->pluck('id');
+        return in_array($role, $roles);
     }
 }

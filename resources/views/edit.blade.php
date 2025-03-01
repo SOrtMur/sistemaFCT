@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container mx-auto">
     <div class="row">
         <div class="col-md-12">
             @isset($company)
@@ -105,6 +105,19 @@
                                     <option value="{{$profesor->id}}" selected>{{$profesor->name}}</option>
                                 @else
                                     <option value="{{$profesor->id}}">{{$profesor->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Rol</label>
+                        <select name="role_id" id="role" required>
+                            <option value="" selected>---</option>
+                            @foreach ($roles as $rol)
+                                @if ($rol->id == $user->role_id)
+                                    <option value="{{$rol->id}}" selected>{{$rol->name}}</option>
+                                @else
+                                    <option value="{{$rol->id}}">{{$rol->name}}</option>
                                 @endif
                             @endforeach
                         </select>

@@ -27,6 +27,7 @@ class UserController extends Controller
         $users = User::all();
         $tutores = [];
         $profesores = [];
+        
         foreach ($users as $user) {
             if ($user->role()->where('name','tutor')->first()) {
                 array_push($tutores, $user);
