@@ -32,11 +32,20 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        User::factory(10)->create();
+        //User::factory(10)->create();
+        User::create([
+            'name' => "admin",
+            'email' => "admin@1",
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'phone' => fake()->phoneNumber(),
+            'surname1' => explode(" ",fake()->name())[1],
+            'remember_token' => Str::random(10),
+        ]);
 
-        Company::factory(20)->create();
+        //Company::factory(20)->create();
 
-        Action::factory(20)->create();
+        //Action::factory(20)->create();
 
         //Crear una relacion de N a N de usuarios con roles y compañías usando attach
         $users = User::all();

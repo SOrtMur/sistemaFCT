@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use App\Models\Role;
+use App\Models\Company;
 
 class UserController extends Controller
 {
@@ -27,7 +28,8 @@ class UserController extends Controller
         $users = User::all();
         $tutores = [];
         $profesores = [];
-        
+        $roles = Role::all();
+        $companies = Company::all();
         foreach ($users as $user) {
             if ($user->role()->where('name','tutor')->first()) {
                 array_push($tutores, $user);
@@ -37,7 +39,7 @@ class UserController extends Controller
             }
         }
 
-        return view('create', ['header' => "Nuevo Usuario", 'tutores' => $tutores, 'profesores' => $profesores]);
+        return view('create', ['header' => "Nuevo Usuario", 'tutores' => $tutores, 'profesores' => $profesores, 'roles' => $roles, 'companies' => $companies]);
     }
 
     /**
@@ -54,7 +56,7 @@ class UserController extends Controller
             'surname1' => 'required'
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'email_verified_at' => now(),
@@ -64,8 +66,13 @@ class UserController extends Controller
             'surname2' => $request->surname2,
             'remember_token' => Str::random(10),
             'tutor_id' => $request->tutor_id,
-            'teacher_id' => $request->teacher_id
+            'teacher_id' => $request->teacher_id,
         ]);
+
+        $user->role()->attach($request->role_id);
+        $user->company()->attach($request->company_id);
+        $user->save();
+
 
         return redirect()->route('user.index');
     }
@@ -88,6 +95,8 @@ class UserController extends Controller
         $users = User::all();
         $tutores = [];
         $profesores = [];
+        $roles = Role::all();
+        $companies = Company::all();
         foreach ($users as $user) {
             if ($user->role()->where('name','tutor')->first()) {
                 array_push($tutores, $user);
@@ -97,7 +106,7 @@ class UserController extends Controller
             }
         }
 
-        return view('edit', ['header' => "Editar datos de $user->name $user->surname1", 'user' => $user, 'tutores' => $tutores, 'profesores' => $profesores]);
+        return view('edit', ['header' => "Editar datos de $user->name $user->surname1", 'user' => $user, 'tutores' => $tutores, 'profesores' => $profesores, 'roles' => $roles, 'companies' => $companies]);
     }
 
     /**
@@ -123,6 +132,13 @@ class UserController extends Controller
             'tutor_id' => $request->tutor_id,
             'teacher_id' => $request->teacher_id
         ]);
+
+        $user = User::find($id);
+
+        $user->company()->detach();
+        $user->company()->attach($request->company_id);
+        $user->role()->attach($request->role_id);
+        $user->save();
 
         return redirect(route('user.index'));
     }

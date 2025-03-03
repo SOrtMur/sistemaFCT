@@ -100,10 +100,28 @@
                             </div>
                             <div class="form-group">
                                 <label for="teacher">Profesor</label>
-                                <select name="teacher_id" id="teacher" required>
+                                <select name="teacher_id" id="teacher" >
                                     <option value="" selected>---</option>
                                     @foreach ($profesores as $profesor)
                                         <option value="{{$profesor->id}}">{{$profesor->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Rol</label>
+                                <select name="role_id" id="role" required>
+                                    <option value="" selected>---</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Empresa</label>
+                                <select name="company_id" id="company">
+                                    <option value="" selected>---</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{$company->id}}">{{$company->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

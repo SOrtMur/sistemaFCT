@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->date('date');
             $table->double('interval');
-            $table->bigInteger('user_id')->nullable()->references('id')->on('users')->onDelete('cascade')->onUpdate('set null');
+            $table->bigInteger('user_id')->nullable()->references('id')->on('users')->onDelete('cascade')->nullOnUpdate()->default(null);
             $table->timestamps();
         });
     }

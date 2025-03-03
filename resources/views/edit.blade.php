@@ -98,7 +98,7 @@
                     </div>
                     <div class="form-group">
                         <label for="teacher">Profesor</label>
-                        <select name="teacher_id" id="teacher" required>
+                        <select name="teacher_id" id="teacher">
                             <option value="" selected>---</option>
                             @foreach ($profesores as $profesor)
                                 @if ($profesor->id == $user->teacher_id)
@@ -109,12 +109,13 @@
                             @endforeach
                         </select>
                     </div>
+                    {{-- Esto va en relaciones --}}
                     <div class="form-group">
                         <label for="role">Rol</label>
                         <select name="role_id" id="role" required>
                             <option value="" selected>---</option>
                             @foreach ($roles as $rol)
-                                @if ($rol->id == $user->role_id)
+                                @if ($rol->id == $user->role()->where("user_id",$user->id)->first()->id)
                                     <option value="{{$rol->id}}" selected>{{$rol->name}}</option>
                                 @else
                                     <option value="{{$rol->id}}">{{$rol->name}}</option>
@@ -122,13 +123,29 @@
                             @endforeach
                         </select>
                     </div>
+                    {{-- Esto va en relaciones --}}
+                    <div class="form-group">
+                        <label for="company">Empresa</label>
+                        <select name="company_id" id="company">
+                            <option value="" selected>---</option>
+                            @foreach ($companies as $company)
+                                @if ($user->company()->where("user_id",$user->id)->first() == null)
+                                    <option value="{{$company->id}}">{{$company->name}}</option>
+                                @elseif ($company->id == $user->company()->where("user_id",$user->id)->first()->id)
+                                    <option value="{{$company->id}}" selected>{{$company->name}}</option>
+                                @else
+                                    <option value="{{$company->id}}">{{$company->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>  
+                    </div>
                     <div class="form-group">    
                         <input type="submit" class="btn btn-primary" value="Guardar"/>
                         <a href="{{route('user.index')}}">Volver al Indice</a>
                     </div>
                 </form>
             @endisset
-            @isset($rol)
+            @isset($role)
                 <form action="{{route('role.update',$rol->id)}}" method="POST">
                     @csrf
                     @method("PUT")

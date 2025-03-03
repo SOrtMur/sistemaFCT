@@ -123,6 +123,22 @@
                 </td>           
              </tr>
             <tr>
+                <th>Rol</th>
+                <td>
+                    @if($user->role()->where("user_id",$user->id)->first() !== null)
+                        {{$user->role()->where("user_id",$user->id)->first()->name}}
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th>Empresa</th>
+                <td>
+                    @if($user->company()->where("user_id",$user->company_id)->first() !== null)
+                        {{$user->company()->where("user_id",$user->company_id)->first()->name}}
+                    @endif
+                </td>
+            </tr>
+            <tr>
                 <td>
                 <a href="{{route('user.edit', $user->id)}}" class="link-info">Editar</a>
                 </td>

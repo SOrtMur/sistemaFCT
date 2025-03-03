@@ -48,6 +48,8 @@
                                 <th>Apellido2</th>
                                 <th>Tutor</th>
                                 <th>Profesor</th>
+                                <th>Empresa</th>
+                                <th>Rol</th>
                                 <th colspan="3">Operaciones de tabla</th>
                             @endisset
                             @isset($roles)
@@ -124,6 +126,18 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if($user->company()->where("user_id",$user->id)->first() !== null)
+                                            {{$user->company()->where('user_id',$user->id)->first()->name}}
+                                    @endif
+                                </td>  
+                                <td>
+                                    @if($user->role()->where("user_id",$user->id)->first() !== null)
+                                            {{$user->role()->where('user_id',$user->id)->first()->name}}
+                                    @else
+                                            Sin rol
+                                    @endif
+                                </td>
+                                <td>
                                     <a href="{{route('user.show', $user->id)}}" class="link-info">Ver</a>
                                 </td>
                                 <td>
@@ -169,6 +183,9 @@
                             <p>Utilice el menú de navegación para acceder a las diferentes secciones.</p>
                             <p>Puede gestionar empresas, acciones, usuarios y roles desde aquí.</p>
                             <p>Para cualquier consulta, no dude en ponerse en contacto con el soporte técnico.</p>
+                            @isset($mensaje)
+                                <p>{{$mensaje}}</p>
+                            @endisset
                         </div>
                     </div>
                 @endif

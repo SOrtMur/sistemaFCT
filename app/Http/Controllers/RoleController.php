@@ -52,8 +52,8 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        $rol = Role::find($id);
-        return view('edit',['header' => "Editar Rol $rol->name", 'rol' => $rol]);
+        $role = Role::find($id);
+        return view('edit',['header' => "Editar Rol $role->name", 'rol' => $role]);
     }
 
     /**

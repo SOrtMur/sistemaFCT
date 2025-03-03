@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -46,5 +47,12 @@ class User extends Authenticatable
 
     public function company(): BelongsToMany{
         return $this->belongsToMany(Company::class, 'companies_roles_users');
+    }
+    public function hasRole($role){
+        $rolAuth = Auth::user()->role()->first()->name;
+        if(str_contains($role, $rolAuth)){
+            return true;
+        }
+        return false;
     }
 }

@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('companies_roles_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Company::class);
-            $table->foreignIdFor(Role::class);
+            $table->foreignIdFor(Company::class)->nullable()->default(null);
+            $table->foreignIdFor(Role::class)->nullable()->default(null);
             $table->foreignIdFor(User::class);
         });
     }

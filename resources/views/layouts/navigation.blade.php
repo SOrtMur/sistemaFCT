@@ -17,8 +17,19 @@
                     </x-nav-link>
                     <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('Usuarios') }}
-
                     </x-nav-link>
+                    <x-nav-link :href="route('role.index')" :active="request()->routeIs('role.index')">
+                        {{ __('Roles') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('company.index')" :active="request()->routeIs('company.index')">
+                        {{ __('Empresas') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('action.index')" :active="request()->routeIs('action.index')">
+                        {{ __('Acciones') }}
+                    </x-nav-link>
+                    {{-- <x-nav-link :href="route('practice.index')" :active="request()->routeIs('practice.index')">
+                        {{ __('Relaciones de Practica') }}
+                    </x-nav-link> --}}
                 </div>
             </div>
 

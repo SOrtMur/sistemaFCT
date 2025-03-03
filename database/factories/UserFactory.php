@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'name' => explode(" ",fake()->name())[0],
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password'),
             'phone' => fake()->phoneNumber(),
             'surname1' => explode(" ",fake()->name())[1],
             'remember_token' => Str::random(10),

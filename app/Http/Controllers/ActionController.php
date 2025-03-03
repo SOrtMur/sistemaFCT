@@ -40,7 +40,7 @@ class ActionController extends Controller
             'description' => $request->description,
             'date' => $request->date,
             'interval' => $request->interval,
-            'user_id' => $request->user_id ?? 1
+            'user_id' => $request->user()->id
         ]);
 
         return redirect()->route('action.index');
