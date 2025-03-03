@@ -21,6 +21,9 @@ class ActionController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('action.index');
+        }
         return view('create', ['header' => "Nueva Acción"]);
     }
 
@@ -29,6 +32,10 @@ class ActionController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('action.index');
+        }
+
         $request->validate([
             'description' => 'required',
             'date' => 'required',
@@ -60,6 +67,9 @@ class ActionController extends Controller
      */
     public function edit(string $id)
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('action.index');
+        }
         $accion = Action::find($id);
         return view('edit', ['header' => "Editar accion",'action' => $accion]);
     }
@@ -69,6 +79,9 @@ class ActionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('action.index');
+        }
         $request->validate([
             'description' => 'required',
             'date' => 'required',
@@ -89,6 +102,10 @@ class ActionController extends Controller
      */
     public function destroy(string $id)
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('action.index');
+        }
+        
         Action::destroy($id);
         return redirect(route('action.index'));
     }

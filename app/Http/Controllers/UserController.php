@@ -25,6 +25,10 @@ class UserController extends Controller
      */
     public function create()
     {   
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('user.index');
+        }
+
         $users = User::all();
         $tutores = [];
         $profesores = [];
@@ -47,6 +51,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('user.index');
+        }
 
         $request->validate([
             'name' => 'required',
@@ -91,6 +99,10 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('user.index');
+        }
+
         $user = User::find($id);
         $users = User::all();
         $tutores = [];
@@ -114,6 +126,10 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('user.index');
+        }
+
         $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -148,6 +164,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        if (auth()->user()->hasRole('tutor|admin')) {
+            return redirect()->route('user.index');
+        }
+
         User::destroy($id);
         return redirect(route('user.index'));
     }

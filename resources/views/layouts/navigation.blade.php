@@ -15,18 +15,26 @@
                     <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
                         {{ __('Indice') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
-                        {{ __('Usuarios') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('role.index')" :active="request()->routeIs('role.index')">
-                        {{ __('Roles') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('company.index')" :active="request()->routeIs('company.index')">
-                        {{ __('Empresas') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('action.index')" :active="request()->routeIs('action.index')">
-                        {{ __('Acciones') }}
-                    </x-nav-link>
+                    @unless(!Auth::user()->hasRole("admin|teacher|tutor"))    
+                        <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+                    @endunless
+                    @unless(!Auth::user()->hasRole("admin"))    
+                        <x-nav-link :href="route('role.index')" :active="request()->routeIs('role.index')">
+                            {{ __('Roles') }}
+                        </x-nav-link>
+                    @endunless
+                    @unless(!Auth::user()->hasRole("admin"))    
+                        <x-nav-link :href="route('company.index')" :active="request()->routeIs('company.index')">
+                            {{ __('Empresas') }}
+                        </x-nav-link>
+                    @endunless
+                    @unless(!Auth::user()->hasRole("teacher|pupil|tutor"))    
+                        <x-nav-link :href="route('action.index')" :active="request()->routeIs('action.index')">
+                            {{ __('Acciones') }}
+                        </x-nav-link>
+                    @endunless
                     {{-- <x-nav-link :href="route('practice.index')" :active="request()->routeIs('practice.index')">
                         {{ __('Relaciones de Practica') }}
                     </x-nav-link> --}}

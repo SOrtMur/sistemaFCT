@@ -32,26 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::resource('usuario', UserController::class)->names('user');
-//     Route::resource('empresa', CompanyController::class)->names('company');
-//     Route::resource('rol', RoleController::class)->names('role');
-// });
-
-// Route::middleware(['auth', 'role:teacher'])->group(function () {
-//     Route::resource('usuario', UserController::class)->names('user');
-//     Route::resource('accion', ActionController::class)->names('action');
-// });
-// Route::middleware(['auth', 'role:tutor'])->group(function () {
-//     Route::resource('usuario', UserController::class)->names('user')->only(['index', 'show']);
-//     Route::resource('accion', ActionController::class)->names('action')->only(['index', 'show']);
-// });
-// Route::middleware(['auth', 'role:pupil'])->group(function () {
-//     Route::resource('accion', ActionController::class)->names('action')->except(['destroy']);
-// });
 
 Route::resource('rol', RoleController::class)->names('role')->middleware(['auth', 'role:admin']);
 Route::resource('usuario', UserController::class)->names('user')->middleware(['auth', 'role:admin|teacher|tutor']);
 Route::resource('accion', ActionController::class)->names('action')->middleware(['auth', 'role:teacher|pupil|tutor']);
 Route::resource('empresa', CompanyController::class)->names('company')->middleware(['auth', 'role:admin']);
-//Route::resource('usuario', UserController::class)->names('user');
