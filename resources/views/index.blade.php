@@ -85,6 +85,9 @@
                             @endforeach
                         @endisset
                         @isset($actions)
+                            @php
+                                $total = 0;
+                            @endphp
                             @foreach ($actions as $action)
                             <tr>
                                 <td>{{$action->description}}</td>
@@ -105,7 +108,13 @@
                                     </form>
                                 </td>
                             </tr>
+                            @php
+                                $total += $action->interval;
+                            @endphp
                             @endforeach
+                            <tr class="text-center" style="background-color: #9e9e9e;">
+                                <td colspan="7">Total tiempo empleado: {{ $total }} horas.</td>
+                            </tr>
                         @endisset
                         @isset($users)
                             @foreach ($users as $user)

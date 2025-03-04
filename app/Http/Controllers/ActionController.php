@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Action;
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class ActionController extends Controller
 {
@@ -12,7 +14,43 @@ class ActionController extends Controller
      */
     public function index()
     {
-        $actions = Action::all();
+        $actions = [];
+        if(auth()->user()->hasRole('tutor')){
+            $users = User::all();
+            $pupils = [];
+            foreach ($users as $user) {
+                if ($user->role()->where('name','pupil')->first()) {
+                    array_push($pupils, $user);
+                }
+            }
+            foreach ($pupils as $pupil) {
+                if($pupil->tutor_id == auth()->user()->id){
+                    foreach ($pupil->actions()->get() as $action) {
+                        array_push($actions, $action);
+                    }
+                }
+            }
+        }
+        if(auth()->user()->hasRole('teacher')){
+            $users = User::all();
+            $pupils = [];
+            foreach ($users as $user) {
+                if ($user->role()->where('name','pupil')->first()) {
+                    array_push($pupils, $user);
+                }
+            }
+            foreach ($pupils as $pupil) {
+                if($pupil->teacher_id == auth()->user()->id){
+                    foreach ($pupil->actions()->get() as $action) {
+                        array_push($actions, $action);
+                    }
+                }
+
+            }
+        }
+        if(auth()->user()->hasRole('pupil')){
+            $actions = auth()->user()->actions()->get();
+        }
         return view('index', ['header' => "Acciones"], compact('actions'));
     }
 

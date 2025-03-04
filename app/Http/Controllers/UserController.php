@@ -16,7 +16,32 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        if (auth()->user()->hasRole('admin')) {
+            $users = User::all();
+        } elseif (auth()->user()->hasRole('tutor')) {
+            $users = User::all();
+            $pupils = [];
+            foreach ($users as $user) {
+                if ($user->role()->where('name','pupil')->first()) {
+                    if ($user->tutor_id == auth()->user()->id) {
+                        array_push($pupils, $user);
+                    }
+                }
+            }
+            $users = $pupils;
+        } elseif (auth()->user()->hasRole('teacher')) {
+            $users = User::all();
+            $pupils = [];
+            foreach ($users as $user) {
+                if ($user->role()->where('name','pupil')->first()) {
+                    if ($user->teacher_id == auth()->user()->id) {
+                        array_push($pupils, $user);
+                    }
+                }
+            }
+            $users = $pupils;
+        }
+
         return view('index', ['header' => "Usuarios"], compact('users'));
     }
 
@@ -25,7 +50,7 @@ class UserController extends Controller
      */
     public function create()
     {   
-        if (auth()->user()->hasRole('tutor|admin')) {
+        if (auth()->user()->hasRole('tutor|pupil')) {
             return redirect()->route('user.index');
         }
 
@@ -52,7 +77,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        if (auth()->user()->hasRole('tutor|admin')) {
+        if (auth()->user()->hasRole('tutor|pupil')) {
             return redirect()->route('user.index');
         }
 
@@ -99,7 +124,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        if (auth()->user()->hasRole('tutor|admin')) {
+        if (auth()->user()->hasRole('tutor|pupil')) {
             return redirect()->route('user.index');
         }
 
@@ -126,7 +151,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (auth()->user()->hasRole('tutor|admin')) {
+        if (auth()->user()->hasRole('tutor|pupil')) {
             return redirect()->route('user.index');
         }
 
@@ -164,7 +189,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        if (auth()->user()->hasRole('tutor|admin')) {
+        if (auth()->user()->hasRole('tutor|pupil')) {
             return redirect()->route('user.index');
         }
 
